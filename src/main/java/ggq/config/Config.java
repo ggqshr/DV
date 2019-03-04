@@ -14,7 +14,7 @@ import java.util.List;
 
 @Configuration
 @EnableWebMvc
-public class testconfig implements WebMvcConfigurer {
+public class Config implements WebMvcConfigurer {
 
     @Override
     public void addFormatters(FormatterRegistry formatterRegistry) {
