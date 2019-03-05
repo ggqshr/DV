@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ggq.mapper.websiteOverviewMapper">
+
+    <select id="getPV" resultType="webOverview">
+        select accesshour,
+               count(*)                  PV,
+               count(distinct sessionid) VV,
+               count(distinct originip)  IP,
+               count(distinct uuid)      UV
+        from cleanlog
+                 join (select CURDATE() today, date_sub(CURDATE(), interval 1 day) yestoday,
+                           date_sub(CURDATE(), interval 7 day) afterSeven,
+                              date_sub(CURDATE(), interval 30 day) afterMonth
+                 from cleanlog limit 1) dd
+                      on (cleanlog.accessdate = dd.${_parameter})
+        group by accesshour
+    </select>
+</mapper>
