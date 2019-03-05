@@ -5,6 +5,7 @@ import org.apache.ibatis.type.Alias;
 @Alias("webOverview")
 public class websiteOverview {
     private Integer accesshour;
+    private String accessDate;
     private Integer PV;
     private Integer VV;
     private Integer IP;
@@ -13,12 +14,21 @@ public class websiteOverview {
     public websiteOverview() {
     }
 
-    public websiteOverview(Integer accesshour, Integer PV, Integer VV, Integer IP, Integer UV) {
+    public websiteOverview(Integer accesshour, String accessDate, Integer PV, Integer VV, Integer IP, Integer UV) {
         this.accesshour = accesshour;
+        this.accessDate = accessDate;
         this.PV = PV;
         this.VV = VV;
         this.IP = IP;
         this.UV = UV;
+    }
+
+    public String getaccessDate() {
+        return accessDate;
+    }
+
+    public void setaccessDate(String accessDate) {
+        this.accessDate = accessDate;
     }
 
     public Integer getAccesshour() {
@@ -65,12 +75,14 @@ public class websiteOverview {
     public String toString() {
         return "websiteOverview{" +
                 "accesshour=" + accesshour +
+                ", accessDate='" + accessDate + '\'' +
                 ", PV=" + PV +
                 ", VV=" + VV +
                 ", IP=" + IP +
                 ", UV=" + UV +
                 '}';
     }
+
     public websiteOverview addWebsiteOverview(websiteOverview ww){
         websiteOverview newObj = new websiteOverview();
         newObj.setIP(this.IP+ww.getIP());

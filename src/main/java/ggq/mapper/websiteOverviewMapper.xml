@@ -7,13 +7,61 @@
                count(*)                  PV,
                count(distinct sessionid) VV,
                count(distinct originip)  IP,
-               count(distinct uuid)      UV
+               count(distinct uuid)      UV,
+               accessDate
         from cleanlog
-                 join (select CURDATE() today, date_sub(CURDATE(), interval 1 day) yestoday,
-                           date_sub(CURDATE(), interval 7 day) afterSeven,
-                              date_sub(CURDATE(), interval 30 day) afterMonth
-                 from cleanlog limit 1) dd
-                      on (cleanlog.accessdate = dd.${_parameter})
-        group by accesshour
+                 join (select date_sub(CURDATE(), interval #{_parameter} day) day
+                       from cleanlog
+                       limit 1) dd
+                      on (cleanlog.accessdate = dd.day)
+        group by accessDate,accesshour
+    </select>
+    <select id="getTotal" resultType="ggq.model.websiteOverview">
+        select count(1) PV, count(distinct sessionid) VV, count(distinct originip) IP, count(distinct uuid) UV
+        from cleanlog
+    </select>
+    <select id="getjump" resultType="java.util.Map">
+        SELECT
+            ii.accessdate,
+            ii.accesshour,
+            ( IFNULL(jump.jumpnumber,0) / ii.pv ) * 100 jumprate
+        FROM
+            ( SELECT accessdate, accesshour, count( 1 ) pv FROM cleanlog GROUP BY accessdate, accesshour ) ii
+                left	JOIN (
+                SELECT
+                    cc.accessdate,
+                    cc.accesshour,
+                    count( 1 ) jumpnumber
+                FROM
+                    (
+                        SELECT
+                            originip,
+                            accessdate,
+                            accesshour,
+                            count( 1 )
+                        FROM
+                            cleanlog
+                        GROUP BY
+                            originip,
+                            accessdate,
+                            accesshour
+                        HAVING
+                            count( 1 ) > 1
+                    ) cc
+                GROUP BY
+                    cc.accessdate,
+                    cc.accesshour
+            ) jump ON ( ii.accesshour = jump.accesshour AND ii.accessdate = jump.accessdate AND jump.accessdate = #{_parameter} )
+
+    </select>
+    <select id="getAvgVisitTime" resultType="java.util.Map">
+        SELECT info.accessdate,info.accesshour, avg(info.visitKeepTime) avgtime
+        FROM
+            (SELECT originip,accessdate,accesshour,
+                    ceil( ( time_to_sec(max(accesstime)) - time_to_sec(min(accessTime))) /60 ) visitKeepTime
+             FROM cleanlog
+             WHERE accessdate=#{_parameter}
+             GROUP BY originip,accessdate,accesshour) info
+        GROUP BY info.accessdate,info.accesshour
     </select>
 </mapper>
