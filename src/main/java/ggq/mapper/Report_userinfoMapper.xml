@@ -56,4 +56,11 @@
     <select id="select" resultType="ggq.model.Report_userinfo">
         select * from report_userinfo limit 1
     </select>
+    <select id="getInfoByDateAndType" resultType="ggq.model.Report_userinfo">
+        select sum(num) num from report_userinfo where acdate=#{0} and type=#{1} group by acdate
+    </select>
+    <select id="getTotalUserNum" resultType="java.lang.Integer">
+        select count(uuid) num from cleanlog where accessDate=#{_parameter}
+        group by accessdate
+    </select>
 </mapper>

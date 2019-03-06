@@ -1,8 +1,9 @@
 package test;
 
 import com.alibaba.fastjson.JSON;
+import ggq.mapper.Report_userinfoMapper;
 import ggq.model.Report_userinfo;
-import ggq.service.ReportUserInfo;
+import ggq.service.ReportUserInfoService;
 import ggq.service.WebOverviewService;
 import ggq.utils.DateUtils;
 import org.junit.Test;
@@ -14,13 +15,15 @@ import java.util.*;
 
 public class test extends SpringTestBase {
     @Autowired
-    ReportUserInfo reportUserInfo;
+    ReportUserInfoService reportUserInfo;
     @Autowired
     ggq.mapper.websiteOverviewMapper websiteOverviewMapper;
     @Autowired
     WebOverviewService webOverviewService;
     @Autowired
     DateUtils dateUtils;
+    @Autowired
+    Report_userinfoMapper report_userinfoMapper;
 
     private void printArray(int[] aa){
         for (int i : aa) {
@@ -33,11 +36,6 @@ public class test extends SpringTestBase {
         }
     }
 
-    @Test
-    public void test1() {
-        Report_userinfo user = reportUserInfo.getUser();
-        System.out.println(user);
-    }
 
     @Test
     public void test2() {
@@ -86,5 +84,16 @@ public class test extends SpringTestBase {
     public void test9() {
         System.out.println(dateUtils.getCurrentDate(DateUtils.onlyDateFormat));
         System.out.println(dateUtils.getDateSubResult(-1));
+    }
+
+    @Test
+    public void test10() {
+        System.out.println(report_userinfoMapper.getTotalUserNum("2019-03-05"));
+    }
+
+
+    @Test
+    public void test11() {
+        System.out.println(JSON.toJSONString(reportUserInfo.getUserInfo(dateUtils.getDateSubResult(-1))));
     }
 }

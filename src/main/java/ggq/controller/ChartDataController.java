@@ -3,7 +3,7 @@ package ggq.controller;
 import com.alibaba.fastjson.JSON;
 import ggq.model.Report_userinfo;
 import ggq.model.websiteOverview;
-import ggq.service.ReportUserInfo;
+import ggq.service.ReportUserInfoService;
 import ggq.service.WebOverviewService;
 import ggq.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,9 +15,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Controller
-public class testController {
-    @Autowired
-    ReportUserInfo reportUserInfo;
+public class ChartDataController {
     @Autowired
     WebOverviewService webOverviewService;
     @Autowired
@@ -29,12 +27,6 @@ public class testController {
         return "/html/test";
     }
 
-    @RequestMapping("/api/reportUserInfo")
-    @ResponseBody
-    public String ReportInfo() {
-        Report_userinfo user = reportUserInfo.getUser();
-        return JSON.toJSONString(user);
-    }
 
     @RequestMapping("/api/totaldata")
     @ResponseBody

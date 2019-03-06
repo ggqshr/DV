@@ -62,4 +62,15 @@ public class Report_userinfo {
     public void setDatediff(Integer datediff) {
         this.datediff = datediff;
     }
+
+    @Override
+    public String toString() {
+        return "Report_userinfo{" +
+                "platform='" + platform + '\'' +
+                ", acdate='" + acdate + '\'' +
+                ", type=" + type +
+                ", num=" + num +
+                ", datediff=" + datediff +
+                '}';
+    }
 }

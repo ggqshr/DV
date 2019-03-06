@@ -8,4 +8,8 @@ public interface Report_userinfoMapper {
     int insertSelective(Report_userinfo record);
 
     Report_userinfo select();
+
+    Report_userinfo getInfoByDateAndType(String date,int type);
+
+    Integer getTotalUserNum(String date);
 }
