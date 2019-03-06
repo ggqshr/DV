@@ -2,8 +2,10 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import ggq.mapper.Report_userinfoMapper;
+import ggq.mapper.UserPIcMapper;
 import ggq.model.Report_userinfo;
 import ggq.service.ReportUserInfoService;
+import ggq.service.UserPicService;
 import ggq.service.WebOverviewService;
 import ggq.utils.DateUtils;
 import org.junit.Test;
@@ -25,7 +27,10 @@ public class test extends SpringTestBase {
     DateUtils dateUtils;
     @Autowired
     Report_userinfoMapper report_userinfoMapper;
-
+    @Autowired
+    UserPIcMapper userPIcMapper;
+    @Autowired
+    UserPicService userPicService;
     private void printArray(int[] aa){
         for (int i : aa) {
             System.out.println(i);
@@ -121,5 +126,20 @@ public class test extends SpringTestBase {
     @Test
     public void name() {
         System.out.println(JSON.toJSONString(reportUserInfo.getOldAndNewUserPerDay("2019-02-25", "2019-03-05")));
+    }
+
+    @Test
+    public void test16() {
+        System.out.println(userPIcMapper.getManNumAndWomanNum());
+    }
+
+    @Test
+    public void test17() {
+        System.out.println(userPicService.getManAndWomanNum());
+    }
+
+    @Test
+    public void test18() {
+        System.out.println(userPicService.getEducation());
     }
 }
