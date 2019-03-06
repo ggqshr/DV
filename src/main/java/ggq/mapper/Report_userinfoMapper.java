@@ -1,6 +1,10 @@
 package ggq.mapper;
 
+import ggq.model.NewUserAndActiveUserData;
 import ggq.model.Report_userinfo;
+import ggq.model.oldUserAndNewUserModel;
+
+import java.util.List;
 
 public interface Report_userinfoMapper {
     int insert(Report_userinfo record);
@@ -12,4 +16,8 @@ public interface Report_userinfoMapper {
     Report_userinfo getInfoByDateAndType(String date,int type);
 
     Integer getTotalUserNum(String date);
+
+    List<NewUserAndActiveUserData> getNewUserDataAndActiveDataBetweenDate(String startDate,String endDate);
+
+    List<oldUserAndNewUserModel> getOldAndNewUserPerDay(String startDate,String endDate);
 }

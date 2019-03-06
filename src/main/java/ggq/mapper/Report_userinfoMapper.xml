@@ -11,11 +11,11 @@
         </constructor>
     </resultMap>
     <insert id="insert" parameterType="ggq.model.Report_userinfo">
-    insert into report_userinfo (platform, acdate, type, 
-      num, datediff)
-    values (#{platform,jdbcType=VARCHAR}, #{acdate,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, 
-      #{num,jdbcType=INTEGER}, #{datediff,jdbcType=INTEGER})
-  </insert>
+        insert into report_userinfo (platform, acdate, type,
+                                     num, datediff)
+        values (#{platform,jdbcType=VARCHAR}, #{acdate,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER},
+                #{num,jdbcType=INTEGER}, #{datediff,jdbcType=INTEGER})
+    </insert>
     <insert id="insertSelective" parameterType="ggq.model.Report_userinfo">
         insert into report_userinfo
         <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -54,13 +54,44 @@
         </trim>
     </insert>
     <select id="select" resultType="ggq.model.Report_userinfo">
-        select * from report_userinfo limit 1
+        select *
+        from report_userinfo
+        limit 1
     </select>
     <select id="getInfoByDateAndType" resultType="ggq.model.Report_userinfo">
-        select sum(num) num from report_userinfo where acdate=#{0} and type=#{1} group by acdate
+        select sum(num) num
+        from report_userinfo
+        where acdate = #{0}
+          and type = #{1}
+        group by acdate
     </select>
     <select id="getTotalUserNum" resultType="java.lang.Integer">
-        select count(uuid) num from cleanlog where accessDate=#{_parameter}
+        select count(uuid) num
+        from cleanlog
+        where accessDate = #{_parameter}
         group by accessdate
+    </select>
+    <select id="getNewUserDataAndActiveDataBetweenDate" resultType="ggq.model.NewUserAndActiveUserData">
+        SELECT total.accessdate                                                                 acDate,
+               (xin.xi / (CASE IFNULL(total.num, 0) WHEN 0 THEN 1 ELSE total.num END) * 100)    newRate,
+               (active.ac / (CASE IFNULL(total.num, 0) WHEN 0 THEN 1 ELSE total.num END) * 100) activeRate
+
+        FROM (SELECT acdate, sum(num) xi FROM report_userinfo WHERE type = 1 GROUP BY acdate) AS xin,
+             (SELECT acdate, sum(num) ac FROM report_userinfo WHERE type = 3 GROUP BY acdate) AS active,
+             (SELECT accessdate, count(uuid) num FROM cleanlog GROUP BY accessdate) AS total
+        WHERE xin.acdate = active.acdate
+          AND active.acdate = total.accessdate
+          AND total.accessDate BETWEEN #{0} and #{1}
+
+    </select>
+    <select id="getOldAndNewUserPerDay" resultType="ggq.model.oldUserAndNewUserModel">
+        SELECT old.accessDate, old.oldnum, new.newnum
+        FROM (SELECT accessdate, count(*) oldnum
+              FROM cleanlog AS c
+              WHERE c.uuid IN (SELECT uuid AS uu FROM user_login_history)
+              group by accessdate) old,
+             (SELECT acdate, count(*) newnum FROM report_userinfo WHERE type = 1 group by acdate) new
+        WHERE old.accessdate = new.acdate
+          and new.acdate BETWEEN #{0} and #{1}
     </select>
 </mapper>

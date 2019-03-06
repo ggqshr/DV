@@ -9,6 +9,7 @@ import ggq.utils.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -95,5 +96,30 @@ public class test extends SpringTestBase {
     @Test
     public void test11() {
         System.out.println(JSON.toJSONString(reportUserInfo.getUserInfo(dateUtils.getDateSubResult(-1))));
+    }
+
+    @Test
+    public void test12() {
+        System.out.println(report_userinfoMapper.getNewUserDataAndActiveDataBetweenDate("2019-02-25", "2019-03-05"));
+    }
+
+    @Test
+    public void test13() throws ParseException {
+        System.out.println(dateUtils.findDates("2019-02-25", "2019-03-05"));
+    }
+
+    @Test
+    public void test14() {
+        System.out.println(reportUserInfo.getNewAndActiveDataBetweenDate("2019-02-25", "2019-03-05"));
+    }
+
+    @Test
+    public void test15() {
+        System.out.println(report_userinfoMapper.getOldAndNewUserPerDay("2019-02-25", "2019-03-05"));
+    }
+
+    @Test
+    public void name() {
+        System.out.println(JSON.toJSONString(reportUserInfo.getOldAndNewUserPerDay("2019-02-25", "2019-03-05")));
     }
 }
