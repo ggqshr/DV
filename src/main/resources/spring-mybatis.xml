@@ -16,6 +16,7 @@
     <!-- 自动扫描 -->
     <context:component-scan base-package="ggq.service" />
     <context:component-scan base-package="ggq.mapper"/>
+    <context:component-scan base-package="ggq.utils"/>
 
     <!--2 加载数据资源属性文件 -->
     <!--<context:property-placeholder location="classpath:jdbc.properties"/>-->

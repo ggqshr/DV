@@ -5,6 +5,7 @@ import ggq.model.websiteOverview;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -51,11 +52,11 @@ public class WebOverviewServiceImpl implements WebOverviewService {
     public HashMap<String, double[]> getJumpRatePerHour(String date) {
         double[] data = new double[24];
         List<Map<String, Integer>> getjump = websiteOverviewMapper.getjump(date);
-        getjump.forEach((map)->{
-            data[Integer.parseInt(String.valueOf(map.get("accesshour")))]=Double.parseDouble(String.valueOf(map.get("jumprate")));
+        getjump.forEach((map) -> {
+            data[Integer.parseInt(String.valueOf(map.get("accesshour")))] = Double.parseDouble(String.valueOf(map.get("jumprate")));
         });
-        HashMap<String,double[]> map = new HashMap<>();
-        map.put("jumprate",data);
+        HashMap<String, double[]> map = new HashMap<>();
+        map.put("jumprate", data);
         return map;
     }
 
@@ -63,13 +64,45 @@ public class WebOverviewServiceImpl implements WebOverviewService {
     public HashMap<String, double[]> getAvgVistiTime(String date) {
         double[] data = new double[24];
         List<Map<String, String>> getjump = websiteOverviewMapper.getAvgVisitTime(date);
-        getjump.forEach((map)->{
-            data[Integer.parseInt(String.valueOf(map.get("accesshour")))]=Double.parseDouble(String.valueOf(map.get("avgtime")));
+        getjump.forEach((map) -> {
+            data[Integer.parseInt(String.valueOf(map.get("accesshour")))] = Double.parseDouble(String.valueOf(map.get("avgtime")));
         });
-        HashMap<String,double[]> map = new HashMap<>();
-        map.put("avgvisittime",data);
+        HashMap<String, double[]> map = new HashMap<>();
+        map.put("avgvisittime", data);
         return map;
     }
 
+    @Override
+    public List<HashMap<String, Object>> getDetailData(String date, String dataSubNumber, int currentHours) {
+        HashMap<String, int[]> pvUvEtcByDataType = getPvUvEtcByDataType(dataSubNumber);
+        HashMap<String, double[]> jumpRatePerHour = getJumpRatePerHour(date);
+        HashMap<String, double[]> avgVistiTime = getAvgVistiTime(date);
+        List<HashMap<String, Object>> dataList = new ArrayList<>();
+        int[] pvData = pvUvEtcByDataType.get("pvData");
+        int[] uvData = pvUvEtcByDataType.get("uvData");
+        int[] vvData = pvUvEtcByDataType.get("vvData");
+        int[] ipData = pvUvEtcByDataType.get("ipData");
+        double[] jumprates = jumpRatePerHour.get("jumprate");
+        double[] avgvisittimes = avgVistiTime.get("avgvisittime");
+        for (int i = 0; i < currentHours; ++i) {
+            HashMap<String, Object> map = new HashMap<>();
+            String currentTime;
+            if(i<10){
+                currentTime = "0"+i+":00";
+            }
+            else{
+                currentTime = i+":00";
+            }
+            map.put("date",date+" "+currentTime);
+            map.put("pv",pvData[i]);
+            map.put("uv",uvData[i]);
+            map.put("vv",vvData[i]);
+            map.put("ip",ipData[i]);
+            map.put("jumprates",jumprates[i]);
+            map.put("avgvisittimes",avgvisittimes[i]);
+            dataList.add(map);
+        }
+        return dataList;
+    }
 
 }

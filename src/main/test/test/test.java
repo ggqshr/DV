@@ -4,13 +4,12 @@ import com.alibaba.fastjson.JSON;
 import ggq.model.Report_userinfo;
 import ggq.service.ReportUserInfo;
 import ggq.service.WebOverviewService;
+import ggq.utils.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 
 public class test extends SpringTestBase {
@@ -20,6 +19,8 @@ public class test extends SpringTestBase {
     ggq.mapper.websiteOverviewMapper websiteOverviewMapper;
     @Autowired
     WebOverviewService webOverviewService;
+    @Autowired
+    DateUtils dateUtils;
 
     private void printArray(int[] aa){
         for (int i : aa) {
@@ -63,5 +64,27 @@ public class test extends SpringTestBase {
     public void test6() {
         HashMap<String, double[]> avgVistiTime = webOverviewService.getAvgVistiTime("2019-03-04");
         printArray(avgVistiTime.get("avgvisittime"));
+    }
+
+    @Test
+    public void test7() {
+        List<HashMap<String, Object>> detailData = webOverviewService.getDetailData("2019-03-04", "1", 24);
+        System.out.println(JSON.toJSON(detailData));
+    }
+
+    @Test
+    public void test8() {
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        cal.add(Calendar.DATE, -2);
+        System.out.println((new SimpleDateFormat("yyyy-MM-dd")).format(cal.getTime()));
+//        System.out.println(date.getHours());// new Date()为获取当前系统时间
+    }
+
+    @Test
+    public void test9() {
+        System.out.println(dateUtils.getCurrentDate(DateUtils.onlyDateFormat));
+        System.out.println(dateUtils.getDateSubResult(-1));
     }
 }

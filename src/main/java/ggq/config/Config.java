@@ -81,13 +81,13 @@ public class Config implements WebMvcConfigurer {
 
     }
     private static final String[] CLASSPATH_RESOURCE_LOCATIONS = {
-            "classpath:/static/","classpath:/META-INF/resources/", "classpath:/resources/",
-             "classpath:/public/" };
+            "classpath:/static/","classpath:/static/workbox-v3.6.3","classpath:/static/icons",
+            "classpath:/META-INF/resources/", "classpath:/resources/",
+             "classpath:/public/", };
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry resourceHandlerRegistry) {
         resourceHandlerRegistry.addResourceHandler("/**")
-                .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS)
-                .setCachePeriod(31556926);
+                .addResourceLocations(CLASSPATH_RESOURCE_LOCATIONS);
     }
 
     @Override
