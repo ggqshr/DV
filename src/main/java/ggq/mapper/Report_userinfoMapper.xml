@@ -95,9 +95,11 @@
           and new.acdate BETWEEN #{0} and #{1}
     </select>
     <select id="getRemainUser" resultType="ggq.model.Report_userinfo">
-        select datediff,sum(num) num
+        select datediff, sum(num) num
         from report_userinfo
-        where type =2
+        where type = 2
         group by datediff
+        ORDER BY datediff asc
+        limit 6
     </select>
 </mapper>

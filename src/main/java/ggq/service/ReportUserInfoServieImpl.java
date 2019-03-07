@@ -11,6 +11,7 @@ import ggq.utils.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.lang.reflect.Array;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -101,6 +102,26 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
             list.add(item.getOldNum());
             map.add(list);
         });
+        return map;
+    }
+
+    @Override
+    public Map<String, Object> getRemainUser() {
+        HashMap<String, Object> map = new HashMap<>();
+        List<Report_userinfo> remainUser = report_userinfoMapper.getRemainUser();
+        List<String> dataLabel = new ArrayList<>();
+        int[] data = new int[6];
+        dataLabel.add("1天后");
+        dataLabel.add("2天后");
+        dataLabel.add("3天后");
+        dataLabel.add("4天后");
+        dataLabel.add("5天后");
+        dataLabel.add("6天后");
+        map.put("datalabel",dataLabel);
+        remainUser.forEach((item)->{
+            data[Integer.parseInt(String.valueOf(item.getDatediff()))-1]=item.getNum();
+        });
+        map.put("data",Ints.asList(data));
         return map;
     }
 }

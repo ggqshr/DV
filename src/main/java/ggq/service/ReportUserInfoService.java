@@ -12,4 +12,6 @@ public interface ReportUserInfoService {
     public Map<String,Object> getNewAndActiveDataBetweenDate(String startDate,String endDate);
 
     public List<Object> getOldAndNewUserPerDay(String startDate,String endDate);
+
+    public Map<String,Object> getRemainUser();
 }

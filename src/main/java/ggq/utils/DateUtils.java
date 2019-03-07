@@ -70,6 +70,7 @@ public class DateUtils {
         }
         return days;
     }
+    //获得两个日期之间的所有日期
     public  List<String> findDates(String dBegin, String dEnd) throws ParseException {
         //日期工具类准备
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");

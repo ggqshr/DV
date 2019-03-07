@@ -4,10 +4,10 @@ import com.alibaba.fastjson.JSON;
 import ggq.mapper.AgentMapper;
 import ggq.mapper.Report_userinfoMapper;
 import ggq.mapper.UserPIcMapper;
+import ggq.mapper.VisitorMapper;
 import ggq.model.Report_userinfo;
-import ggq.service.ReportUserInfoService;
-import ggq.service.UserPicService;
-import ggq.service.WebOverviewService;
+import ggq.model.VisitorDataModel;
+import ggq.service.*;
 import ggq.utils.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -174,5 +174,31 @@ public class test extends SpringTestBase {
     @Test
     public void test23() {
         System.out.println(report_userinfoMapper.getRemainUser());
+    }
+
+    @Test
+    public void test24() {
+        System.out.println(reportUserInfo.getRemainUser());
+    }
+    @Autowired
+    ProductService productService;
+    @Test
+    public void test25() {
+        System.out.println(JSON.toJSONString(productService.getProductData()));
+    }
+
+    @Autowired
+    VisitorServiceImpl visitorService;
+    @Autowired
+    VisitorMapper visitorMapper;
+    @Test
+    public void test26() {
+        List<VisitorDataModel> deepBetweenSenvenDays = visitorMapper.getDeepBetweenSenvenDays();
+        System.out.println(deepBetweenSenvenDays);
+    }
+
+    @Test
+    public void test27() {
+        System.out.println(visitorService.getOldAndNewNum());
     }
 }
