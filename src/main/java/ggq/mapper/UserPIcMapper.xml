@@ -2,14 +2,32 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ggq.mapper.UserPIcMapper">
     <select id="getManNumAndWomanNum" resultType="java.util.Map">
-        select sum(IF(gender='男',1,0)) manNum,sum(IF(gender='女',1,0)) womanNum
+        select sum(IF(gender = '男', 1, 0)) manNum, sum(IF(gender = '女', 1, 0)) womanNum
         from user_picture
     </select>
     <select id="getEducation" resultType="java.util.Map">
-        select sum(IF(education='本科',1,0)) benke,sum(IF(education='初中',1,0)) chuzhong,
-               sum(IF(education='高中',1,0)) gaozhong,sum(IF(education='专科',1,0)) zhuanke,
-               sum(IF(education='无',1,0)) wu
+        select sum(IF(education = '本科', 1, 0)) benke,
+               sum(IF(education = '初中', 1, 0)) chuzhong,
+               sum(IF(education = '高中', 1, 0)) gaozhong,
+               sum(IF(education = '专科', 1, 0)) zhuanke,
+               sum(IF(education = '无', 1, 0))  wu
         from user_picture
 
+    </select>
+    <select id="getAge" resultType="java.util.Map">
+        select sum(IF(age = '无', 1, 0))             wu,
+               sum(IF(age BETWEEN 0 and 17, 1, 0))  a1,
+               sum(IF(age BETWEEN 18 and 24, 1, 0)) a2,
+               sum(IF(age BETWEEN 25 and 29, 1, 0)) a3,
+               sum(IF(age BETWEEN 30 and 34, 1, 0)) a4,
+               sum(IF(age BETWEEN 35 and 39, 1, 0)) a5,
+               sum(if(age >= 40, 1, 0))             a6
+        from user_picture
+    </select>
+    <select id="getEmployee" resultType="java.util.Map">
+        select employee name, count(*) value
+        from user_picture
+        group by employee
+        limit 10
     </select>
 </mapper>

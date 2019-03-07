@@ -20,4 +20,6 @@ public interface Report_userinfoMapper {
     List<NewUserAndActiveUserData> getNewUserDataAndActiveDataBetweenDate(String startDate,String endDate);
 
     List<oldUserAndNewUserModel> getOldAndNewUserPerDay(String startDate,String endDate);
+
+    List<Report_userinfo> getRemainUser();
 }

@@ -7,4 +7,8 @@ public interface UserPicService {
     List<Map<String,String>> getManAndWomanNum();
 
     List<Map<String,String>> getEducation();
+
+    List<String> getAge();
+
+    List<Map<String,String>> getEmployee();
 }

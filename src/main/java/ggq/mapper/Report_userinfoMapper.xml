@@ -94,4 +94,10 @@
         WHERE old.accessdate = new.acdate
           and new.acdate BETWEEN #{0} and #{1}
     </select>
+    <select id="getRemainUser" resultType="ggq.model.Report_userinfo">
+        select datediff,sum(num) num
+        from report_userinfo
+        where type =2
+        group by datediff
+    </select>
 </mapper>

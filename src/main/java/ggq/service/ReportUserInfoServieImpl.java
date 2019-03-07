@@ -25,10 +25,27 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
     @Override
     public Map<String, Object> getUserInfo(String date) {
         HashMap<String, Object> map = new HashMap<>();
-        map.put("newuser", report_userinfoMapper.getInfoByDateAndType(date, 1).getNum());//获取新增访客
-        map.put("activeuser", report_userinfoMapper.getInfoByDateAndType(date, 3).getNum());//获取活跃用户
-        map.put("silenceuser", report_userinfoMapper.getInfoByDateAndType(date, 4).getNum());
-        map.put("totaluser", report_userinfoMapper.getTotalUserNum(date));
+        try {
+            map.put("newuser", report_userinfoMapper.getInfoByDateAndType(date, 1).getNum());
+        } catch (NullPointerException e) {
+            map.put("newuser", 0);
+        }
+        try {
+            map.put("activeuser", report_userinfoMapper.getInfoByDateAndType(date, 3).getNum());//获取活跃用户
+        } catch (NullPointerException e) {
+            map.put("activeuser", 0);
+        }
+        try {
+            map.put("silenceuser", report_userinfoMapper.getInfoByDateAndType(date, 4).getNum());
+
+        } catch (NullPointerException e) {
+            map.put("silenceuser", 0);
+        }
+        try {
+            map.put("totaluser", report_userinfoMapper.getTotalUserNum(date));
+        } catch (NullPointerException e) {
+            map.put("totaluser", 0);
+        }
         return map;
     }
 

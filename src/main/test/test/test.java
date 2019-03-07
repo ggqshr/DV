@@ -1,6 +1,7 @@
 package test;
 
 import com.alibaba.fastjson.JSON;
+import ggq.mapper.AgentMapper;
 import ggq.mapper.Report_userinfoMapper;
 import ggq.mapper.UserPIcMapper;
 import ggq.model.Report_userinfo;
@@ -141,5 +142,37 @@ public class test extends SpringTestBase {
     @Test
     public void test18() {
         System.out.println(userPicService.getEducation());
+    }
+
+    @Test
+    public void test19() {
+        System.out.println(userPIcMapper.getAge());
+    }
+
+    @Test
+    public void test20() {
+        System.out.println(userPIcMapper.getEmployee());
+    }
+
+    @Test
+    public void test21() {
+        System.out.println(userPicService.getEmployee());
+    }
+    @Autowired
+    AgentMapper agentMapper;
+    @Test
+    public void test22() {
+        System.out.println(JSON.toJSONString(agentMapper.getAgentTable(null, null, "", "", "")));
+    }
+
+    @Test
+    public void ttest() {
+        Map<String, Object> userInfo = reportUserInfo.getUserInfo(dateUtils.getDateSubResult(-1));
+        System.out.println(userInfo);
+    }
+
+    @Test
+    public void test23() {
+        System.out.println(report_userinfoMapper.getRemainUser());
     }
 }
