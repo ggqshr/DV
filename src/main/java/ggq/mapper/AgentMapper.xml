@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ggq.mapper.AgentMapper">
+    <select id="getAgentTable" resultType="ggq.model.UserAgentTable">
+        select acdate,actime,platform,pnum,referdomain,dnum,concat(substring(useragent,1,25),'...') useragent,anum from user_agent_table
+        <where>
+            <if test="startDate !='' and startDate != null and endData !='' and endData != null">
+                acdate BETWEEN #{startDate} and #{endData}
+            </if>
+            <if test="agent!=null and agent!='' and agent!='%%' and agent!='%null%'">
+                and useragent like #{agent}
+            </if>
+            <if test="domin!=null and domin!='' and domin!='%%' and domin!='%null%' ">
+                and referdomain like #{domin}
+            </if>
+            <if test="os!=null and os!='' and os!='%%' and os!='%null%'">
+                and platform like #{os}
+            </if>
+        </where>
+
+    </select>
+</mapper>

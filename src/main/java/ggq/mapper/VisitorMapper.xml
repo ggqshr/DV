@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="ggq.mapper.VisitorMapper">
+    <select id="getDeepBetweenSenvenDays" resultType="ggq.model.VisitorDataModel">
+        select pv.accessDate, pv.pvn / uv.uvn deep
+        from (select accessDate, count(*) pvn from cleanlog group by accessDate) pv,
+             (select accessDate, count(DISTINCT uuid) uvn from cleanlog group by accessDate) uv
+        where pv.accessDate = uv.accessDate
+          and (pv.accessDate between date_sub(CURDATE(), interval 6 day) and CURDATE())
+        order by pv.accessDate asc
+    </select>
+    <select id="getOldAndNewVistor" resultType="ggq.model.VisitorDataModel">
+        select user_type,count(*) num from user_picture group by user_type order by user_type asc
+    </select>
+</mapper>
