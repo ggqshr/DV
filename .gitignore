@@ -28,3 +28,4 @@ hs_err_pid*
 /target/
 /DV.iml
 /src/main/resources/static/
+/src/main/webapp/static/

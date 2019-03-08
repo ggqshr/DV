@@ -201,4 +201,14 @@ public class test extends SpringTestBase {
     public void test27() {
         System.out.println(visitorService.getOldAndNewNum());
     }
+
+    @Test
+    public void test28() {
+        HashMap<Object, Object> map = new HashMap<>();
+        Map<String, List<String>> deepData = visitorService.getDeepData();
+        List<String> oldAndNewNum = visitorService.getOldAndNewNum();
+        map.put("deep",deepData);
+        map.put("oldandnew",oldAndNewNum);
+        System.out.println(JSON.toJSONString(map));
+    }
 }
