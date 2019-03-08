@@ -21,11 +21,6 @@ public class ChartDataController {
     @Autowired
     DateUtils dateUtils;
 
-    @RequestMapping("/api/fake_chart_data")
-    @ResponseBody
-    public String test() {
-        return "/html/test";
-    }
 
 
     @RequestMapping("/api/totaldata")

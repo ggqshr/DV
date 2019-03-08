@@ -2,9 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ggq.mapper.ProductMapper">
     <select id="getProductClickTopTen" resultType="ggq.model.ProductDetail">
-        select * from product_detail order by pro_click_num asc limit 10
+        select * from product_detail order by pro_click_num desc limit 10
     </select>
     <select id="getProductBugTopTen" resultType="ggq.model.ProductDetail">
-        select * from product_detail order by pro_buy_num asc limit 10
+        select * from product_detail order by pro_buy_num desc limit 10
     </select>
 </mapper>

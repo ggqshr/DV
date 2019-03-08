@@ -13,7 +13,7 @@ public class ReportUserInfoController {
     @Autowired
     ReportUserInfoService reportUserInfoService;
 
-    @RequestMapping(value = "/api/report/remain", produces = "application/json; charset=utf-8")
+        @RequestMapping(value = "/api/report/remain", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getData() {
         Map<String, Object> remainUser = reportUserInfoService.getRemainUser();

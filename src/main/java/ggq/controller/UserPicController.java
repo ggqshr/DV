@@ -31,17 +31,5 @@ public class UserPicController {
         return JSON.toJSONString(finalMap);
     }
 
-    @RequestMapping("/api/userpic/manandwomannum")
-    @ResponseBody
-    public String getManAndWomanData() {
-        List<Map<String, String>> manAndWomanNum = userPicService.getManAndWomanNum();
-        return JSON.toJSONString(manAndWomanNum);
-    }
-    @RequestMapping("/api/userpic/education")
-    @ResponseBody
-    public String getEducation() {
-        List<Map<String, String>> education = userPicService.getEducation();
-        return JSON.toJSONString(education);
-    }
 
 }
