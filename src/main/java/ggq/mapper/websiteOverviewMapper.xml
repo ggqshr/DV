@@ -5,9 +5,9 @@
     <select id="getPV" resultType="webOverview">
         select accesshour,
                count(*)                  PV,
-               count(distinct sessionid) VV,
+               count(sessionid) VV,
                count(distinct originip)  IP,
-               count(distinct uuid)      UV,
+               count(distinct sessionid)      UV,
                accessDate
         from cleanlog
                  join (select date_sub(CURDATE(), interval #{_parameter} day) day
@@ -17,7 +17,7 @@
         group by accessDate,accesshour
     </select>
     <select id="getTotal" resultType="ggq.model.websiteOverview">
-        select count(1) PV, count(distinct sessionid) VV, count(distinct originip) IP, count(distinct uuid) UV
+        select count(1) PV, count(sessionid) VV, count(distinct originip) IP, count(distinct sessionid) UV
         from cleanlog
     </select>
     <select id="getjump" resultType="java.util.Map">
