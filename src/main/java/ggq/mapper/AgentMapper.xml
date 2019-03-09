@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="ggq.mapper.AgentMapper">
     <select id="getAgentTable" resultType="ggq.model.UserAgentTable">
-        select acdate,actime,platform,pnum,referdomain,dnum,concat(substring(useragent,1,25),'...') useragent,anum from user_agent_table
+        select id,acdate,actime,platform,pnum,referdomain,dnum,concat(substring(useragent,1,25),'...') useragent,anum from user_agent_table
         <where>
             <if test="startDate !='' and startDate != null and endData !='' and endData != null">
                 acdate BETWEEN #{startDate} and #{endData}

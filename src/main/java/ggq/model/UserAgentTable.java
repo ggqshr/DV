@@ -2,7 +2,7 @@ package ggq.model;
 
 
 public class UserAgentTable {
-
+  private String id;
   private String acdate;
   private String actime;
   private String platform;
@@ -15,21 +15,16 @@ public class UserAgentTable {
   public UserAgentTable() {
   }
 
-  @Override
-  public String toString() {
-    return "UserAgentTable{" +
-            "acdate='" + acdate + '\'' +
-            ", actime='" + actime + '\'' +
-            ", platform='" + platform + '\'' +
-            ", pnum=" + pnum +
-            ", referdomain='" + referdomain + '\'' +
-            ", dnum=" + dnum +
-            ", useragent='" + useragent + '\'' +
-            ", anum=" + anum +
-            '}';
+  public String getId() {
+    return id;
   }
 
-  public UserAgentTable(String acdate, String actime, String platform, long pnum, String referdomain, long dnum, String useragent, long anum) {
+  public void setId(String id) {
+    this.id = id;
+  }
+
+  public UserAgentTable(String id, String acdate, String actime, String platform, long pnum, String referdomain, long dnum, String useragent, long anum) {
+    this.id = id;
     this.acdate = acdate;
     this.actime = actime;
     this.platform = platform;

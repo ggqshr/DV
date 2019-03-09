@@ -43,7 +43,12 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
             map.put("silenceuser", 0);
         }
         try {
-            map.put("totaluser", report_userinfoMapper.getTotalUserNum(date));
+            Integer totalUserNum = report_userinfoMapper.getTotalUserNum(date);
+            if (totalUserNum == null) {
+                map.put("totaluser", 0);
+            } else {
+                map.put("totaluser", totalUserNum);
+            }
         } catch (NullPointerException e) {
             map.put("totaluser", 0);
         }
@@ -117,11 +122,11 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
         dataLabel.add("4天后");
         dataLabel.add("5天后");
         dataLabel.add("6天后");
-        map.put("datalabel",dataLabel);
-        remainUser.forEach((item)->{
-            data[Integer.parseInt(String.valueOf(item.getDatediff()))-1]=item.getNum();
+        map.put("datalabel", dataLabel);
+        remainUser.forEach((item) -> {
+            data[Integer.parseInt(String.valueOf(item.getDatediff())) - 1] = item.getNum();
         });
-        map.put("data",Ints.asList(data));
+        map.put("data", Ints.asList(data));
         return map;
     }
 }
