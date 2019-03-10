@@ -3,11 +3,52 @@ package ggq.model;
 
 public class ProductDetail {
 
-    private long pro_id;
-    private String pro_name;
-    private long pro_click_num;
-    private long pro_buy_num;
+    private long proId;
+    private String proName;
+    private long proClickNum;
+    private long proBuyNum;
     private int rank;
+
+
+    public ProductDetail(long proId, String proName, long proClickNum, long proBuyNum, int rank) {
+        this.proId = proId;
+        this.proName = proName;
+        this.proClickNum = proClickNum;
+        this.proBuyNum = proBuyNum;
+        this.rank = rank;
+    }
+
+    public long getProId() {
+        return proId;
+    }
+
+    public void setProId(long proId) {
+        this.proId = proId;
+    }
+
+    public String getProName() {
+        return proName;
+    }
+
+    public void setProName(String proName) {
+        this.proName = proName;
+    }
+
+    public long getProClickNum() {
+        return proClickNum;
+    }
+
+    public void setProClickNum(long proClickNum) {
+        this.proClickNum = proClickNum;
+    }
+
+    public long getProBuyNum() {
+        return proBuyNum;
+    }
+
+    public void setProBuyNum(long proBuyNum) {
+        this.proBuyNum = proBuyNum;
+    }
 
     public int getRank() {
         return rank;
@@ -17,55 +58,15 @@ public class ProductDetail {
         this.rank = rank;
     }
 
-    public long getPro_id() {
-        return pro_id;
-    }
-
-    public void setPro_id(long pro_id) {
-        this.pro_id = pro_id;
-    }
-
-    public String getPro_name() {
-        return pro_name;
-    }
-
-    public void setPro_name(String pro_name) {
-        this.pro_name = pro_name;
-    }
-
-    public long getPro_click_num() {
-        return pro_click_num;
-    }
-
-    public void setPro_click_num(long pro_click_num) {
-        this.pro_click_num = pro_click_num;
-    }
-
-    public long getPro_buy_num() {
-        return pro_buy_num;
-    }
-
-    public void setPro_buy_num(long pro_buy_num) {
-        this.pro_buy_num = pro_buy_num;
-    }
-
     @Override
     public String toString() {
         return "ProductDetail{" +
-                "pro_id=" + pro_id +
-                ", pro_name='" + pro_name + '\'' +
-                ", pro_click_num=" + pro_click_num +
-                ", pro_buy_num=" + pro_buy_num +
+                "proId=" + proId +
+                ", proName='" + proName + '\'' +
+                ", proClickNum=" + proClickNum +
+                ", proBuyNum=" + proBuyNum +
                 ", rank=" + rank +
                 '}';
-    }
-
-    public ProductDetail(long pro_id, String pro_name, long pro_click_num, long pro_buy_num, int rank) {
-        this.pro_id = pro_id;
-        this.pro_name = pro_name;
-        this.pro_click_num = pro_click_num;
-        this.pro_buy_num = pro_buy_num;
-        this.rank = rank;
     }
 
     public ProductDetail() {

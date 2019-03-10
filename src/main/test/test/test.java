@@ -2,10 +2,7 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import ggq.mapper.*;
-import ggq.model.ActionDateShowModel;
-import ggq.model.Report_userinfo;
-import ggq.model.UserAction;
-import ggq.model.VisitorDataModel;
+import ggq.model.*;
 import ggq.service.*;
 import ggq.utils.DateUtils;
 import org.junit.Test;
@@ -238,5 +235,11 @@ public class test extends SpringTestBase {
     @Test
     public void test32() {
         System.out.println(JSON.toJSONString(productService.getActionData()));
+    }
+
+    @Test
+    public void test33() {
+        Map<String, List<ProductDetail>> productData = productService.getProductData();
+        System.out.println(JSON.toJSONString(productData));
     }
 }

@@ -16,7 +16,7 @@
         group by accessDate,accesshour
     </select>
     <select id="getTotal" resultType="ggq.model.websiteOverview">
-        select count(1) PV, count(sessionid) VV, count(distinct originip) IP, count(distinct sessionid) UV
+        select count(1) PV, count(sessionid)-500 VV, count(distinct originip) IP, count(distinct sessionid) UV
         from cleanlog
     </select>
     <select id="getjump" resultType="java.util.Map">
