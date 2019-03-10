@@ -7,13 +7,13 @@ import java.util.Map;
 
 public interface ReportUserInfoService {
 
-    public Map<String,Object> getUserInfo(String date);
+    Map<String, Object> getUserInfo(String date);
 
-    public Map<String,Object> getNewAndActiveDataBetweenDate(String startDate,String endDate);
+    Map<String, Object> getNewAndActiveDataBetweenDate(String startDate, String endDate);
 
-    public List<Object> getOldAndNewUserPerDay(String startDate,String endDate);
+    List<Object> getOldAndNewUserPerDay(String startDate, String endDate);
 
-    public Map<String,Object> getRemainUser();
+    Map<String, Object> getRemainUser();
 
-    public Map<String,double[]> getNewAndActiveRemainUserRate();
+    Map<String, double[]> getNewAndActiveRemainUserRate();
 }
