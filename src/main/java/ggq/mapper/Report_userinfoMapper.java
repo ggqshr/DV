@@ -3,6 +3,7 @@ package ggq.mapper;
 import ggq.model.NewUserAndActiveUserData;
 import ggq.model.Report_userinfo;
 import ggq.model.oldUserAndNewUserModel;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,4 +23,8 @@ public interface Report_userinfoMapper {
     List<oldUserAndNewUserModel> getOldAndNewUserPerDay(String startDate,String endDate);
 
     List<Report_userinfo> getRemainUser();
+
+    Integer getUserInfoByTypeAndDateGroupByType(String acDate,int type);
+
+    Integer getRemainRateByDateAndDateDiff(@Param("acDate") String acDate,@Param("dateDiff") int dateDiff);
 }

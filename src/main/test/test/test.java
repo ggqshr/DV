@@ -6,10 +6,10 @@ import ggq.model.*;
 import ggq.service.*;
 import ggq.utils.DateUtils;
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import javax.xml.crypto.Data;
-import java.lang.management.MemoryManagerMXBean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,6 +30,7 @@ public class test extends SpringTestBase {
     UserPIcMapper userPIcMapper;
     @Autowired
     UserPicService userPicService;
+    Logger log  = LoggerFactory.getLogger(this.getClass());
 
     private void printArray(int[] aa) {
         for (int i : aa) {
@@ -241,5 +242,24 @@ public class test extends SpringTestBase {
     public void test33() {
         Map<String, List<ProductDetail>> productData = productService.getProductData();
         System.out.println(JSON.toJSONString(productData));
+    }
+
+    @Test
+    public void test34() {
+        Double newUser = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(dateUtils.getDateSubResult(-6), 1));
+        for (int i = 1; i < 7; i++) {
+            Integer remainUser = report_userinfoMapper.getRemainRateByDateAndDateDiff(dateUtils.getDateSubResult(-6), i);
+            if (remainUser!=null){
+                System.out.println(remainUser / newUser);
+            }
+            else{
+                System.out.println(0);
+            }
+        }
+    }
+
+    @Test
+    public void test35() {
+        System.out.println(JSON.toJSONString(reportUserInfo.getNewAndActiveRemainUserRate()));
     }
 }

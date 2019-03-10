@@ -102,4 +102,19 @@
         ORDER BY datediff asc
         limit 6
     </select>
+    <select id="getUserInfoByTypeAndDateGroupByType" resultType="integer">
+        select sum(num)
+        from report_userinfo
+        where type = #{param2}
+          and acdate = #{param1}
+        group by type
+    </select>
+    <select id="getRemainRateByDateAndDateDiff" resultType="integer">
+        select sum(num)
+        from report_userinfo
+        where type = 2
+          and acdate = #{acDate}
+          and datediff = #{dateDiff}
+        group by type
+    </select>
 </mapper>

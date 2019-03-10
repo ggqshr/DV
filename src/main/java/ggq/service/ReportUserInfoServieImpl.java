@@ -1,5 +1,6 @@
 package ggq.service;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.base.Strings;
 import com.google.common.primitives.Doubles;
 import com.google.common.primitives.Ints;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -129,4 +131,43 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
         map.put("data", Ints.asList(data));
         return map;
     }
+
+    @Override
+    public Map<String, double[]> getNewAndActiveRemainUserRate() {
+        //用来格式化小数
+        NumberFormat nf = NumberFormat.getNumberInstance();
+        //保留一位小数
+        nf.setMaximumFractionDigits(1);
+
+        String theDayBeforeSixDay = dateUtils.getDateSubResult(-6);
+        HashMap<String, double[]> map = new HashMap<>();
+        //获取新用户留存率
+        Double newUser = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(theDayBeforeSixDay, 1));
+        double[] newData = new double[7];
+        Integer[] storeData = new Integer[7];
+
+        newData[0] = 100.0;
+        for (int i = 1; i < 7; i++) {
+            storeData[i] = report_userinfoMapper.getRemainRateByDateAndDateDiff(theDayBeforeSixDay, i);
+            if (storeData[i] != null) {
+                newData[i] = Double.parseDouble(nf.format(storeData[i] / newUser * 100));
+            } else {
+                storeData[i] = 0;
+                newData[i] = 0;
+            }
+        }
+        map.put("newRemainRate", newData);
+
+        //获取或活跃用户留存
+        Double aDouble = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(theDayBeforeSixDay, 3));
+        double[] activeData = new double[7];
+
+        activeData[0] = 100;
+        for (int i = 1; i < 7; ++i) {
+            activeData[i] = Double.parseDouble(nf.format(storeData[i] / aDouble * 100));
+        }
+        map.put("activeRemainRate", activeData);
+        return map;
+    }
+
 }
