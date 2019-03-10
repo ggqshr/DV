@@ -1,10 +1,7 @@
 package test;
 
 import com.alibaba.fastjson.JSON;
-import ggq.mapper.AgentMapper;
-import ggq.mapper.Report_userinfoMapper;
-import ggq.mapper.UserPIcMapper;
-import ggq.mapper.VisitorMapper;
+import ggq.mapper.*;
 import ggq.model.Report_userinfo;
 import ggq.model.VisitorDataModel;
 import ggq.service.*;
@@ -12,6 +9,7 @@ import ggq.utils.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -46,7 +44,7 @@ public class test extends SpringTestBase {
 
     @Test
     public void test2() {
-        HashMap<String, int[]> pvUvEtcByDataType = webOverviewService.getPvUvEtcByDataType("1");
+        HashMap<String, Object> pvUvEtcByDataType = webOverviewService.getPvUvEtcByDataType("1");
         System.out.println(JSON.toJSONString(pvUvEtcByDataType));
     }
 
@@ -204,5 +202,17 @@ public class test extends SpringTestBase {
 
     @Test
     public void test28() {
+        System.out.println(JSON.toJSONString(webOverviewService.getAvgVistiTime(dateUtils.getCurrentDate(DateUtils.onlyDateFormat))));
+    }
+
+    @Test
+    public void test29() {
+        System.out.println(JSON.toJSONString(webOverviewService.getDetailData(dateUtils.getCurrentDate(DateUtils.onlyDateFormat), "1", 12)));
+    }
+    @Autowired
+    ProductMapper productMapper;
+    @Test
+    public void test30() {
+        System.out.println(productMapper.getUserAction());
     }
 }

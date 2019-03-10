@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface WebOverviewService {
 
-    HashMap<String, int[]> getPvUvEtcByDataType(String subDateNumber);
+    HashMap<String, Object> getPvUvEtcByDataType(String subDateNumber);
 
     websiteOverview getTotal();
 

@@ -22,7 +22,6 @@ public class ChartDataController {
     DateUtils dateUtils;
 
 
-
     @RequestMapping("/api/totaldata")
     @ResponseBody
     public String getTotalUV() {
@@ -51,13 +50,15 @@ public class ChartDataController {
 
     @RequestMapping("/api/dataperhour")
     @ResponseBody
-    public String getDatePerOur(){
-        HashMap<String,HashMap<String, int[]>> map = new HashMap<>();
-        map.put("today",webOverviewService.getPvUvEtcByDataType("0"));
-        map.put("yestoday",webOverviewService.getPvUvEtcByDataType("1"));
-        map.put("beforseven",webOverviewService.getPvUvEtcByDataType("7"));
-        map.put("beformonth",webOverviewService.getPvUvEtcByDataType("30"));
+    public String getDatePerOur() {
+        HashMap<String, HashMap<String, Object>> map = new HashMap<>();
+        map.put("today", webOverviewService.getPvUvEtcByDataType("0"));
+        map.put("yestoday", webOverviewService.getPvUvEtcByDataType("1"));
+        map.put("beforseven", webOverviewService.getPvUvEtcByDataType("7"));
+        map.put("beformonth", webOverviewService.getPvUvEtcByDataType("30"));
         return JSON.toJSONString(map);
     }
+
+
 
 }

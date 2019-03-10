@@ -15,7 +15,7 @@
 
     </select>
     <select id="getAge" resultType="java.util.Map">
-        select sum(IF(age = '无', 1, 0))             wu,
+        select sum(IF(age is null, 1, 0))             wu,
                sum(IF(age BETWEEN 0 and 17, 1, 0))  a1,
                sum(IF(age BETWEEN 18 and 24, 1, 0)) a2,
                sum(IF(age BETWEEN 25 and 29, 1, 0)) a3,
