@@ -2,7 +2,9 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import ggq.mapper.*;
+import ggq.model.ActionDateShowModel;
 import ggq.model.Report_userinfo;
+import ggq.model.UserAction;
 import ggq.model.VisitorDataModel;
 import ggq.service.*;
 import ggq.utils.DateUtils;
@@ -10,6 +12,7 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.xml.crypto.Data;
+import java.lang.management.MemoryManagerMXBean;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -30,12 +33,14 @@ public class test extends SpringTestBase {
     UserPIcMapper userPIcMapper;
     @Autowired
     UserPicService userPicService;
-    private void printArray(int[] aa){
+
+    private void printArray(int[] aa) {
         for (int i : aa) {
             System.out.println(i);
         }
     }
-    private void printArray(double[] aa){
+
+    private void printArray(double[] aa) {
         for (double i : aa) {
             System.out.println(i);
         }
@@ -156,8 +161,10 @@ public class test extends SpringTestBase {
     public void test21() {
         System.out.println(userPicService.getEmployee());
     }
+
     @Autowired
     AgentMapper agentMapper;
+
     @Test
     public void test22() {
         System.out.println(JSON.toJSONString(agentMapper.getAgentTable(null, null, "", "", "")));
@@ -178,8 +185,10 @@ public class test extends SpringTestBase {
     public void test24() {
         System.out.println(reportUserInfo.getRemainUser());
     }
+
     @Autowired
     ProductService productService;
+
     @Test
     public void test25() {
         System.out.println(JSON.toJSONString(productService.getProductData()));
@@ -189,6 +198,7 @@ public class test extends SpringTestBase {
     VisitorServiceImpl visitorService;
     @Autowired
     VisitorMapper visitorMapper;
+
     @Test
     public void test26() {
         List<VisitorDataModel> deepBetweenSenvenDays = visitorMapper.getDeepBetweenSenvenDays();
@@ -209,10 +219,24 @@ public class test extends SpringTestBase {
     public void test29() {
         System.out.println(JSON.toJSONString(webOverviewService.getDetailData(dateUtils.getCurrentDate(DateUtils.onlyDateFormat), "1", 12)));
     }
+
     @Autowired
     ProductMapper productMapper;
+
     @Test
-    public void test30() {
-        System.out.println(productMapper.getUserAction());
+    public void test30() throws ParseException {
+        System.out.println(productService.getActionData());
+    }
+
+    @Test
+    public void test31() throws NoSuchFieldException, IllegalAccessException {
+        ActionDateShowModel model = new ActionDateShowModel(1, "ggq");
+        model.getClass().getField("date1").setInt(model, 2);
+        System.out.println(model);
+    }
+
+    @Test
+    public void test32() {
+        System.out.println(JSON.toJSONString(productService.getActionData()));
     }
 }

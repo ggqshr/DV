@@ -14,8 +14,10 @@
         limit 10
     </select>
     <select id="getUserAction" resultType="ggq.model.UserAction">
-        select *
-        from (select distinct acdate from user_action) ss
-                 LEFT JOIN user_action on (ss.acdate = user_action.acdate)
+        select ss.acdate, action_name,action_id,action_num
+        from (select distinct acdate from user_action where acdate BETWEEN #{param1} and #{param2} ) ss
+                 left  join
+             user_action aa on (ss.acdate=aa.acdate)
+        order by action_name asc, ss.acdate asc
     </select>
 </mapper>

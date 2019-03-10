@@ -21,8 +21,8 @@ public class DateUtils {
     final static public SimpleDateFormat str2Date = new SimpleDateFormat("yyyy-MM-dd");
 
 
-    public String getCurrentDate(String timeFormat){
-        if(timeFormat==null){
+    public String getCurrentDate(String timeFormat) {
+        if (timeFormat == null) {
             timeFormat = onlyDateFormat;
         }
         Date date = new Date();
@@ -30,7 +30,13 @@ public class DateUtils {
         return df.format(date);
     }
 
-    public String getDateSubResult(int subTimeNumber){
+    public String getCurrentDate() {
+        Date date = new Date();
+        SimpleDateFormat df = new SimpleDateFormat(onlyDateFormat);
+        return df.format(date);
+    }
+
+    public String getDateSubResult(int subTimeNumber) {
         SimpleDateFormat df = new SimpleDateFormat(onlyDateFormat);
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
@@ -70,8 +76,9 @@ public class DateUtils {
         }
         return days;
     }
+
     //获得两个日期之间的所有日期
-    public  List<String> findDates(String dBegin, String dEnd) throws ParseException {
+    public List<String> findDates(String dBegin, String dEnd) throws ParseException {
         //日期工具类准备
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 
@@ -87,7 +94,7 @@ public class DateUtils {
         List<String> Datelist = new ArrayList<String>();
         Datelist.add(dBegin);
         // 每次循环给calBegin日期加一天，直到calBegin.getTime()时间等于dEnd
-        while (format.parse(dEnd).after(calBegin.getTime()))  {
+        while (format.parse(dEnd).after(calBegin.getTime())) {
             // 根据日历的规则，为给定的日历字段添加或减去指定的时间量
             calBegin.add(Calendar.DAY_OF_MONTH, 1);
             Datelist.add(format.format(calBegin.getTime()));
