@@ -9,6 +9,7 @@ import org.junit.Test;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.encoding.Md5PasswordEncoder;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -261,5 +262,21 @@ public class test extends SpringTestBase {
     @Test
     public void test35() {
         System.out.println(JSON.toJSONString(reportUserInfo.getNewAndActiveRemainUserRate()));
+    }
+
+    @Test
+    public void test36() {
+        Md5PasswordEncoder md5=new Md5PasswordEncoder();
+        String admin = md5.encodePassword("admin", "ttt1111");
+        System.out.println(admin);
+        System.out.println(md5.isPasswordValid(admin, "admin1", "111"));
+    }
+    @Autowired
+    UserTableMapper userTableMapper;
+    @Test
+    public void test37() {
+        Md5PasswordEncoder md5=new Md5PasswordEncoder();
+        UserTable admin = userTableMapper.getUserByUserName("admin");
+        System.out.println(md5.isPasswordValid(admin.getUserPassword(), "admin", "ttt1111"));
     }
 }
