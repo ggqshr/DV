@@ -35,6 +35,7 @@ public class ProductController {
 
     /**
      * 返回产品的点击和购买前十
+     *
      * @return
      */
     @RequestMapping(value = "/api/product/data", produces = "application/json; charset=utf-8")
@@ -46,6 +47,7 @@ public class ProductController {
 
     /**
      * 返回用户操作分析数据
+     *
      * @return
      */
     @RequestMapping(value = "/api/product/actiondata", produces = "application/json; charset=utf-8")
@@ -57,9 +59,10 @@ public class ProductController {
 
     /**
      * 生成excel报表并返回
+     *
      * @param res response
      * @throws ParseException 日期转化异常
-     * @throws IOException IO异常
+     * @throws IOException    IO异常
      */
     @RequestMapping(value = "/api/getexcel")
     public void getExcel(HttpServletResponse res) throws ParseException, IOException {
@@ -80,7 +83,6 @@ public class ProductController {
         for (int i = 1; i <= 8; i++) {
             row.createCell(i).setCellStyle(excelUtils.getStyle(wb, 0));
         }
-
 
 
         row = sheet.createRow(1);
@@ -122,6 +124,30 @@ public class ProductController {
             sheet.autoSizeColumn(i);
         }
 
+        res.setContentType("application/vnd.ms-excel;charset=utf-8");
+        OutputStream os = res.getOutputStream();
+        wb.write(os);
+        os.flush();
+        os.close();
+    }
+
+    /**
+     * 生成产品分析excel报表并返回
+     *
+     * @param res response
+     * @throws ParseException 日期转化异常
+     * @throws IOException    IO异常
+     */
+    @RequestMapping(value = "/api/getexcelproduct")
+    public void getExcelProduct(HttpServletResponse res) throws ParseException, IOException {
+        Map<String, List<ProductDetail>> productData = productService.getProductData();
+        List<ProductDetail> buy = productData.get("buy");
+        List<ProductDetail> click = productData.get("click");
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet1 = wb.createSheet("产品购买Top10");
+        HSSFSheet sheet2 = wb.createSheet("产品点击Top10");
+        excelUtils.CreateBuyExcel(wb,sheet1, buy);
+        excelUtils.CreateClickExcel(wb,sheet2, click);
         res.setContentType("application/vnd.ms-excel;charset=utf-8");
         OutputStream os = res.getOutputStream();
         wb.write(os);
