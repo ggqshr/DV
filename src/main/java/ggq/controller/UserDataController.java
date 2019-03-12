@@ -28,37 +28,55 @@ public class UserDataController {
     DateUtils dateUtils;
 
 
-
-
+    /**
+     * 昨天的新用户、沉默用户和活跃用户数据
+     *
+     * @return
+     */
     @RequestMapping("/api/userdata")
     @ResponseBody
-    public String getIntroduceRowData(){
+    public String getIntroduceRowData() {
         Map<String, Object> userInfo = service.getUserInfo(dateUtils.getDateSubResult(-1));
         return JSON.toJSONString(userInfo);
     }
 
-    @RequestMapping(value = "/api/ratedata",method = RequestMethod.POST)
+    /**
+     * 新访客和活跃访客占比数据
+     *
+     * @param dateModel 传入的参数封装的模型
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/api/ratedata", method = RequestMethod.POST)
     @ResponseBody
     public String getNewAndActiveRate(@RequestBody DateModel dateModel) throws ParseException {
         String startDate = dateModel.getStartDate();
         String endDate = dateModel.getEndDate();
-
-        Map<String, Object> newAndActiveDataBetweenDate
-                = service.getNewAndActiveDataBetweenDate(
-                        date2Str.format(str2Date.parse(startDate)),
+        //date2Str用来将日期转换成字符串
+        Map<String, Object> newAndActiveDataBetweenDate = service.getNewAndActiveDataBetweenDate(
+                date2Str.format(str2Date.parse(startDate)),
                 date2Str.format(str2Date.parse(endDate))
-                );
+        );
         return JSON.toJSONString(newAndActiveDataBetweenDate);
     }
 
-    @RequestMapping(value = "/api/oldandnewdata",method = RequestMethod.POST)
+    /**
+     * 获得指定日期的新老用户数量
+     *
+     * @param dateModel 传入的参数封装的模型
+     * @return
+     * @throws ParseException
+     */
+    @RequestMapping(value = "/api/oldandnewdata", method = RequestMethod.POST)
     @ResponseBody
     public String getOldAndNewBetweenDate(@RequestBody DateModel dateModel) throws ParseException {
         String startDate = dateModel.getStartDate();
         String endDate = dateModel.getEndDate();
 
-        List<Object> oldAndNewUserPerDay = service.getOldAndNewUserPerDay(date2Str.format(str2Date.parse(startDate)),
-                date2Str.format(str2Date.parse(endDate)));
+        List<Object> oldAndNewUserPerDay = service.getOldAndNewUserPerDay(
+                date2Str.format(str2Date.parse(startDate)),
+                date2Str.format(str2Date.parse(endDate))
+        );
         return JSON.toJSONString(oldAndNewUserPerDay);
     }
 }

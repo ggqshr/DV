@@ -14,6 +14,10 @@ public class ReportUserInfoController {
     @Autowired
     ReportUserInfoService reportUserInfoService;
 
+    /**
+     * 返回最近七天的用户留存数据
+     * @return
+     */
     @RequestMapping(value = "/api/report/remain", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getData() {
@@ -21,6 +25,10 @@ public class ReportUserInfoController {
         return JSON.toJSONString(remainUser);
     }
 
+    /**
+     * 返回最近七天的新用户和活跃用户的留存率数据
+     * @return
+     */
     @RequestMapping(value = "/api/report/newandactiveremain", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getData2() {

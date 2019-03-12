@@ -16,14 +16,23 @@ public class VisitorController {
     @Autowired
     VisitorService visitorService;
 
-    @RequestMapping(value = "/api/visitor/data",produces = "application/json; charset=utf-8")
+    /**
+     * 获得当前访客的所有数据,包括新老访客数，以及平均访问深度
+     *
+     * @return
+     */
+    @RequestMapping(value = "/api/visitor/data", produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getData(){
+    public String getData() {
         HashMap<Object, Object> map = new HashMap<>();
+
+        //获得平均访问深度数据
         Map<String, List<String>> deepData = visitorService.getDeepData();
+        map.put("deep", deepData);
+
+        //获得新老用户数量
         List<String> oldAndNewNum = visitorService.getOldAndNewNum();
-        map.put("deep",deepData);
-        map.put("oldandnew",oldAndNewNum);
+        map.put("oldandnew", oldAndNewNum);
         return JSON.toJSONString(map);
     }
 }

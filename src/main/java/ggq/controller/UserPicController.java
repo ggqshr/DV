@@ -16,18 +16,32 @@ public class UserPicController {
     @Autowired
     UserPicService userPicService;
 
-    @RequestMapping(value="/api/userpic/getalldata" ,produces = "application/json; charset=utf-8")
+    /**
+     * 获得用户画像的数据，包括教育情况、男女生比例、Top10职业分布、以及年龄段分布。
+     *
+     * @return
+     */
+    @RequestMapping(value = "/api/userpic/getalldata", produces = "application/json; charset=utf-8")
     @ResponseBody
-    public String getAlldata(){
+    public String getAlldata() {
         HashMap<Object, Object> finalMap = new HashMap<>();
+
+        //获得男女数量
         List<Map<String, String>> manAndWomanNum = userPicService.getManAndWomanNum();
-        finalMap.put("peoplenum",manAndWomanNum);
+        finalMap.put("peoplenum", manAndWomanNum);
+
+        //获得用户年龄分布数据
         List<String> age = userPicService.getAge();
-        finalMap.put("age",age);
+        finalMap.put("age", age);
+
+        //获得用户教育分布情况
         List<Map<String, String>> education = userPicService.getEducation();
-        finalMap.put("education",education);
+        finalMap.put("education", education);
+
+        //获得用户职业分布情况
         List<Map<String, String>> employee = userPicService.getEmployee();
-        finalMap.put("employee",employee);
+        finalMap.put("employee", employee);
+
         return JSON.toJSONString(finalMap);
     }
 

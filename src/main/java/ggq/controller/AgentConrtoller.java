@@ -18,25 +18,44 @@ import java.util.List;
 
 @Controller
 public class AgentConrtoller {
-    Logger log = LoggerFactory.getLogger(AgentConrtoller.class);
     @Autowired
     AgentService agentService;
 
+    /**
+     * 根据传入的AgentDataModel查询指定的用户终端分析数据
+     *
+     * @param model 封装查询的条件字段的数据模型
+     * @return JSON格式的终端分析数据
+     */
     @RequestMapping(value = "/api/agen/data", method = RequestMethod.POST)
     @ResponseBody
     public String getdata(@RequestBody AgentDataModel model) {
-        log.warn(model.toString());
         if (model.getAcdate() == null) {
-            List<UserAgentTable> dataByCondition = agentService.getDataByCondition(null, null, "%"+model.getReferdomain()+"%",
-                    "%"+model.getUseragent()+"%",  "%"+model.getPlatform()+"%");
+            List<UserAgentTable> dataByCondition = agentService.getDataByCondition(
+                    null,
+                    null,
+                    "%" + model.getReferdomain() + "%",
+                    "%" + model.getUseragent() + "%",
+                    "%" + model.getPlatform() + "%");
+
             return JSON.toJSONString(dataByCondition);
         } else if (model.getAcdate().size() == 0) {
-            List<UserAgentTable> dataByCondition = agentService.getDataByCondition(null, null, "%"+model.getReferdomain()+"%",
-                    "%"+model.getUseragent()+"%",  "%"+model.getPlatform()+"%");
+            List<UserAgentTable> dataByCondition = agentService.getDataByCondition(
+                    null,
+                    null,
+                    "%" + model.getReferdomain() + "%",
+                    "%" + model.getUseragent() + "%",
+                    "%" + model.getPlatform() + "%");
+
             return JSON.toJSONString(dataByCondition);
         } else {
-            List<UserAgentTable> dataByCondition = agentService.getDataByCondition(model.getAcdate().get(0), model.getAcdate().get(1), "%"+model.getReferdomain()+"%",
-                    "%"+model.getUseragent()+"%", "%"+model.getPlatform()+"%");
+            List<UserAgentTable> dataByCondition = agentService.getDataByCondition(
+                    model.getAcdate().get(0),
+                    model.getAcdate().get(1),
+                    "%" + model.getReferdomain() + "%",
+                    "%" + model.getUseragent() + "%",
+                    "%" + model.getPlatform() + "%");
+
             return JSON.toJSONString(dataByCondition);
         }
     }

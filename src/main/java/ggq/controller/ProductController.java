@@ -33,6 +33,10 @@ public class ProductController {
     @Autowired
     DateUtils dateUtils;
 
+    /**
+     * 返回产品的点击和购买前十
+     * @return
+     */
     @RequestMapping(value = "/api/product/data", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getData() {
@@ -40,6 +44,10 @@ public class ProductController {
         return JSON.toJSONString(productData);
     }
 
+    /**
+     * 返回用户操作分析数据
+     * @return
+     */
     @RequestMapping(value = "/api/product/actiondata", produces = "application/json; charset=utf-8")
     @ResponseBody
     public String getActionData() {
@@ -47,6 +55,12 @@ public class ProductController {
         return JSON.toJSONString(actionData);
     }
 
+    /**
+     * 生成excel报表并返回
+     * @param res response
+     * @throws ParseException 日期转化异常
+     * @throws IOException IO异常
+     */
     @RequestMapping(value = "/api/getexcel")
     public void getExcel(HttpServletResponse res) throws ParseException, IOException {
         List<ActionDateShowModel> actionData = productService.getActionData();
@@ -68,11 +82,8 @@ public class ProductController {
         }
 
 
-//        CellRangeAddress columnRegion = new CellRangeAddress(1, 4, 0, 0);
-//        sheet.addMergedRegion(columnRegion);
 
         row = sheet.createRow(1);
-//        row.createCell(0).setCellStyle(excelUtils.getStyle(wb, 3));
         row.setHeight((short) (22.50 * 20));
         row.createCell(0).setCellValue("行为ID");
         row.createCell(1).setCellValue("行为名");

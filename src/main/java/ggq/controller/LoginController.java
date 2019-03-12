@@ -13,16 +13,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
+
 @Controller
 public class LoginController {
-    //todo
-    // 登陆以后需要返回
-    // {"status":"ok","type":"account","currentAuthority":"user"}
+    //Hash的盐，防止暴力破解
     private static final String SALT = "ttt1111";
 
     @Autowired
     UserTableMapper userTableMapper;
 
+    /**
+     * 登陆使用
+     * @param model 包含用户名，密码等字段
+     * @return
+     */
     @RequestMapping(value = "/api/login/login", method = RequestMethod.POST)
     @ResponseBody
     public String login(@RequestBody UserLoginModel model) {
@@ -37,8 +41,8 @@ public class LoginController {
         if (userByUserName == null) {
             map.put("status", "error");
         } else {
-
             String password = model.getPassword();
+            //验证密码是否正确
             boolean passwordValid = md5.isPasswordValid(userByUserName.getUserPassword(), password, SALT);
             if (passwordValid) {
                 map.put("status", "ok");
