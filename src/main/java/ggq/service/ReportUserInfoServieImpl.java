@@ -141,32 +141,46 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
 
         String theDayBeforeSixDay = dateUtils.getDateSubResult(-6);
         HashMap<String, double[]> map = new HashMap<>();
+        Integer[] storeData;
         //获取新用户留存率
-        Double newUser = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(theDayBeforeSixDay, 1));
-        double[] newData = new double[7];
-        Integer[] storeData = new Integer[7];
+        try {
+            Double newUser = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(theDayBeforeSixDay, 1));
+            double[] newData = new double[7];
+            storeData = new Integer[7];
 
-        newData[0] = 100.0;
-        for (int i = 1; i < 7; i++) {
-            storeData[i] = report_userinfoMapper.getRemainRateByDateAndDateDiff(theDayBeforeSixDay, i);
-            if (storeData[i] != null) {
-                newData[i] = Double.parseDouble(nf.format(storeData[i] / newUser * 100));
-            } else {
+            newData[0] = 100.0;
+            for (int i = 1; i < 7; i++) {
+                storeData[i] = report_userinfoMapper.getRemainRateByDateAndDateDiff(theDayBeforeSixDay, i);
+                if (storeData[i] != null) {
+                    newData[i] = Double.parseDouble(nf.format(storeData[i] / newUser * 100));
+                } else {
+                    storeData[i] = 0;
+                    newData[i] = 0;
+                }
+            }
+            map.put("newRemainRate", newData);
+        } catch (NullPointerException e) {
+            double[] newData = new double[7];
+            map.put("newRemainRate", newData);
+            storeData = new Integer[7];
+            for (int i = 1; i < 7; i++) {
                 storeData[i] = 0;
-                newData[i] = 0;
             }
         }
-        map.put("newRemainRate", newData);
+        try {
+            //获取或活跃用户留存
+            Double aDouble = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(theDayBeforeSixDay, 3));
+            double[] activeData = new double[7];
 
-        //获取或活跃用户留存
-        Double aDouble = Double.valueOf(report_userinfoMapper.getUserInfoByTypeAndDateGroupByType(theDayBeforeSixDay, 3));
-        double[] activeData = new double[7];
-
-        activeData[0] = 100;
-        for (int i = 1; i < 7; ++i) {
-            activeData[i] = Double.parseDouble(nf.format(storeData[i] / aDouble * 100));
+            activeData[0] = 100;
+            for (int i = 1; i < 7; ++i) {
+                activeData[i] = Double.parseDouble(nf.format(storeData[i] / aDouble * 100));
+            }
+            map.put("activeRemainRate", activeData);
+        } catch (NullPointerException e) {
+            double[] activeData = new double[7];
+            map.put("activeRemainRate", activeData);
         }
-        map.put("activeRemainRate", activeData);
         return map;
     }
 
