@@ -279,4 +279,14 @@ public class test extends SpringTestBase {
         UserTable admin = userTableMapper.getUserByUserName("admin");
         System.out.println(md5.isPasswordValid(admin.getUserPassword(), "admin", "ttt1111"));
     }
+
+    @Test
+    public void test38() {
+        System.out.println(reportUserInfo.getRemainUser());
+    }
+
+    @Test
+    public void test39() {
+        System.out.println(reportUserInfo.getNewAndActiveRemainUserRate());
+    }
 }

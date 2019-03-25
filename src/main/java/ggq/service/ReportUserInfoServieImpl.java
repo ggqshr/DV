@@ -126,6 +126,7 @@ public class ReportUserInfoServieImpl implements ReportUserInfoService {
         dataLabel.add("6天后");
         map.put("datalabel", dataLabel);
         remainUser.forEach((item) -> {
+            System.out.println(Integer.parseInt(String.valueOf(item.getDatediff())) - 1);
             data[Integer.parseInt(String.valueOf(item.getDatediff())) - 1] = item.getNum();
         });
         map.put("data", Ints.asList(data));
